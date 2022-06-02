@@ -1,0 +1,3 @@
+var selected = [];
+var correct = [];
+
