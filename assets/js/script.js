@@ -1,6 +1,10 @@
 var leaderboard = [];
 leaderboard=localStorage.getItem("leaderboard");
 localStorage.setItem("leaderboard","");
+
+var timerEl = document.getElementById('countdown');
+var mainEl = document.getElementById('main');
+
 if (!leaderboard){
     leaderboard=[];
 }
@@ -42,16 +46,55 @@ question4.setAttribute("name","Q");
 var para4= document.createElement("span");
 var broken4= document.createElement("br");
 
+// global timer for quiz
+var seconds =3;
+
+  
+
+function countdown() {
+  
+    
+    var timeInterval = setInterval(function () {
+     
+      if (seconds > 0) {
+        timerEl.textContent = seconds + ' seconds remaining';
+        seconds--;
+      } 
+      
+      else if (seconds === 0) {
+        // timerEl.textContent = seconds + ' seconds remaining';
+        // seconds--;
+        timerEl.textContent = '';
+        clearInterval(timeInterval);
+        enterscore();
+
+
+        // ViewScore();
+
+      }
+
+        // if quiz is not finished in time or quiz has been completed it will take you to the final page
+      else {
+        timerEl.textContent = '';
+        // alert("Thank you for taking the quiz")
+        clearInterval(timeInterval);
+        
+      }
+    }, 1000);
+};
+
+  
 
 
 //start page
+
 function start (){
     prompt.innerText = "Do you want to start the quiz?";
     
     butt.innerText="Start Quiz";
-
     butt.onclick= first;
     
+  
 
     
     
@@ -66,7 +109,7 @@ function start (){
 
 // first question
 function first (){
-
+    countdown();
     prompt.innerText = "What color is the sky?";
 
     para1.innerText= "Red"
@@ -115,7 +158,9 @@ function second (){
     }
 
     else { 
+        seconds = seconds-50; 
         choice=false;
+        
     }
 
 
@@ -174,30 +219,35 @@ function second (){
 };
 
 
+
+// Page where you enter your score
 function final (){
     if (question4.checked){
         score++;   
     }
        
     else if ( !question1.checked && !question2.checked && !question3.checked && !question4.checked){
-           alert("Please select one of the choices!");
-           second ();
-           return;
+        alert("Please select one of the choices!");
+        second ();
+        return;
    
     }
 
     else { 
         choice=false;
+        seconds = seconds-50;
     }
 
 
+    
+
     test.innerHTML="";
     prompt.innerHTML = "Your Final Score Is "+ score+ ("!");
-    butt.innerText="Finish";
-    butt.onclick= ViewScore;
+    butt.innerText="Enter Score";
+    butt.onclick= enterscore;
 
     test.appendChild(prompt);
-    test.appendChild(user);
+    // test.appendChild(user);
     test.appendChild(butt);
     
 
@@ -211,13 +261,32 @@ function final (){
         test.appendChild(para);
     }
 
-    
+    // seconds= seconds == 0;
 
 };
+
+function enterscore(){
+
+    test.innerHTML="";
+    prompt.innerHTML = "Enter username";
+    butt.innerText="View Leaderboard";
+    butt.onclick= ViewScore;
+
+    test.appendChild(prompt);
+    test.appendChild(user);
+    test.appendChild(broken1);
+    test.appendChild(broken2);
+    test.appendChild(butt);
+    
+
+   
+
+}
 
 
 // shows leaderboard score
 function ViewScore () {
+    
     var check= false;
     for (i=0; i<leaderboard.length; i++){
         if (leaderboard[i].score<= score){
@@ -246,6 +315,14 @@ function ViewScore () {
         HiScoreList.appendChild(item); 
     };
 
+
+    test.innerHTML="The High Scores";
+    prompt.innerHTML = "";
+    butt.innerText="Start";
+    user.innerText="";
+    
+    test.appendChild(prompt);
+    
     test.appendChild(HiScoreList);
 
 };
@@ -254,5 +331,7 @@ function ViewScore () {
 
 
 start();
+
+
 
 
