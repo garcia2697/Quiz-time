@@ -11,15 +11,21 @@ h2 {
     font-size: 30px;
 }
 
-.timeSpot{
+#timeSpot{
     display: flex;
     justify-content: space-between;
+}
+
+ul{
+    list-style: none;
+    
 }
 
 li{
     list-style: none;
     
 }
+
 #quiz {
     background-color: hsl(0, 0%, 100%);
     border-radius: 5px;
@@ -30,6 +36,12 @@ li{
     margin: 0 auto;
     max-width: 800px;
     padding: 30px 40px;
+    justify-content: center;
+    align-items: center;
+}
+
+p {
+    justify-content: center;
 }
 
 button {
@@ -38,4 +50,8 @@ button {
     border-radius: 5px;
     border-width: 1px;
     padding: 10px 15px;
+}
+
+p{
+    color: gray;
 }
